@@ -1,9 +1,7 @@
 @echo off
 set PATH=%PATH%;C:\Program Files\Git\cmd
-git init
 git add -A
-git config user.email "agadeepaoli@example.com"
-git config user.name "AGA DEEPA OLI"
-git commit -m "Initial commit: AGA DEEPA OLI website with database"
+git commit -m "Add render.yaml for one-click deployment"
+git push origin main
 echo.
-echo === GIT SETUP COMPLETE ===
+echo === PUSHED TO GITHUB ===

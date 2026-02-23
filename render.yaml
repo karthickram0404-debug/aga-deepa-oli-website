@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: aga-deepa-oli
+    runtime: node
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 3000
+    disk:
+      name: data
+      mountPath: /opt/render/project/src/uploads
+      sizeGB: 1
