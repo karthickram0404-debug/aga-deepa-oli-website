@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="ta" dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="அக தீப ஒளி - பார்வையற்றோர் நல அறக்கட்டளை மற்றும் இல்லம். தமிழ் கவிதைகள், கட்டுரைகள் தொகுப்பு. ஆசிரியர்: சந்திரசேகர் P">
+  <meta name="keywords" content="Tamil Poetry, Kavithai, Katurai, தமிழ் கவிதை, கட்டுரை, அக தீப ஒளி">
+  <meta name="author" content="Chandrasekara P">
+  <title>அக தீப ஒளி | AGA DEEPA OLI - Tamil Poetry</title>
+  <link rel="icon" type="image/svg+xml" href="logo.svg">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Skip Navigation (Accessibility) -->
+  <a href="#main-content" class="skip-nav" id="skip-nav">உள்ளடக்கத்திற்கு செல்ல (Skip to Content)</a>
+
+  <!-- Animated Background -->
+  <div class="bg-animation" aria-hidden="true"></div>
+
+  <!-- Accessibility Toolbar -->
+  <div class="a11y-toolbar" role="toolbar" aria-label="அணுகல் கருவிகள் (Accessibility Tools)">
+    <button class="a11y-btn" id="font-increase" aria-label="எழுத்து அளவை பெரிதாக்கு (Increase font size)"
+      title="பெரிய எழுத்து">A+</button>
+    <button class="a11y-btn" id="font-decrease" aria-label="எழுத்து அளவை சிறிதாக்கு (Decrease font size)"
+      title="சிறிய எழுத்து">A-</button>
+    <button class="a11y-btn" id="toggle-contrast" aria-label="உயர் மாறுபாடு நிலை மாற்று (Toggle high contrast)"
+      aria-pressed="false" title="உயர் மாறுபாடு">◐</button>
+    <button class="a11y-btn" id="toggle-tts" aria-label="உரையை படிக்கவும் (Read page aloud)"
+      title="படிக்கவும்">🔊</button>
+  </div>
+
+  <!-- Header -->
+  <header class="header" role="banner">
+    <nav class="nav-container" aria-label="Main Navigation">
+      <a href="#" class="nav-brand" aria-label="AGA DEEPA OLI Home">
+        <img src="logo.svg" alt="அக தீப ஒளி Logo" width="50" height="50">
+        <div class="brand-text">
+          <span class="brand-name">AGA DEEPA OLI</span>
+          <span class="brand-sub">BLIND HOME &amp; WELFARE TRUST</span>
+        </div>
+      </a>
+
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-menu" role="menubar">
+        <li role="none"><a href="#" class="nav-link active" data-section="home" role="menuitem">🏠 முகப்பு</a></li>
+        <li role="none"><a href="#" class="nav-link" data-section="padaipukal" role="menuitem">✍ படைப்புகள்</a></li>
+        <li role="none"><a href="#" class="nav-link" data-section="katuraikal" role="menuitem">📜 கட்டுரைகள்</a></li>
+        <li role="none"><a href="#" class="nav-link" data-section="trust" role="menuitem">🏛️ அறக்கட்டளை</a></li>
+        <li role="none"><a href="#" class="nav-link" data-section="about" role="menuitem">👤 பற்றி</a></li>
+        <li role="none"><a href="#" class="nav-link" data-section="contact" role="menuitem">📞 தொடர்பு</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Search Bar -->
+  <div class="search-container" id="search-container">
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" class="search-input" placeholder="கவிதை, அறக்கட்டளை தேடுங்கள்..."
+        aria-label="Search poems and trust details" autocomplete="off">
+      <button class="search-voice-btn" id="search-voice" aria-label="குரல் தேடல் (Voice search)"
+        title="குரல் தேடல்">🎤</button>
+      <button class="search-clear-btn" id="search-clear" aria-label="Clear search" style="display:none;">✕</button>
+    </div>
+    <div class="search-results" id="search-results" role="listbox" aria-label="Search results" style="display:none;">
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main id="main-content" role="main">
+
+    <!-- ==================== HOME ==================== -->
+    <section class="section active" id="home" aria-labelledby="home-title">
+      <div class="hero">
+        <div class="hero-content">
+          <!-- Logo -->
+          <img src="logo.svg" alt="AGA DEEPA OLI Trust Logo - Heart with glowing lamp" class="hero-logo">
+
+          <h1 class="hero-title" id="home-title">அக தீப ஒளி</h1>
+          <p class="hero-subtitle">அக தீப ஒளி பார்வையற்றோர் நல அறக்கட்டளை மற்றும் இல்லம்<br>
+            <em>தமிழ் கவிதைகளின் அழகிய தொகுப்பு</em>
+          </p>
+
+          <!-- Portraits of Thiruvalluvar & Bharathiyar -->
+          <div class="portraits">
+            <!-- Thiruvalluvar -->
+            <div class="portrait-card">
+              <div class="portrait-frame" role="img" aria-label="Thiruvalluvar portrait">
+                <img src="thiruvalluvar.jpg" alt="திருவள்ளுவர் - Thiruvalluvar"
+                  style="width:100%;height:100%;object-fit:cover;">
+              </div>
+              <h3 class="portrait-name"><span class="icon-animated icon-spin">📜</span> திருவள்ளுவர்</h3>
+              <p class="portrait-desc">Thiruvalluvar — Author of Thirukkural</p>
+            </div>
+
+            <!-- Bharathiyar -->
+            <div class="portrait-card">
+              <div class="portrait-frame" role="img" aria-label="Bharathiyar portrait">
+                <img src="bharathiyar.jpg" alt="பாரதியார் - Bharathiyar"
+                  style="width:100%;height:100%;object-fit:cover;background:#fff;">
+              </div>
+              <h3 class="portrait-name"><span class="icon-animated icon-pulse">🔥</span> பாரதியார்</h3>
+              <p class="portrait-desc">Bharathiyar — Revolutionary Tamil Poet</p>
+            </div>
+          </div>
+
+          <!-- Poet Details Section -->
+          <div class="poet-details-grid">
+            <!-- Thiruvalluvar Details -->
+            <div class="poet-detail-card">
+              <div class="poet-detail-header">
+                <span class="icon-animated icon-bounce">📖</span>
+                <h3>திருவள்ளுவர் (Thiruvalluvar)</h3>
+              </div>
+              <p class="poet-period"><span class="icon-animated icon-glow">🕰️</span> காலம்: கி.மு. 31 (பிறந்த நாள்:
+                ஜனவரி 16)</p>
+              <p>திருவள்ளுவர் ஒரு புகழ்பெற்ற தமிழ் கவிஞர் மற்றும் தத்துவஞானி ஆவார். இவர் எழுதிய
+                <strong>திருக்குறள்</strong> உலகப் புகழ்பெற்ற இலக்கியமாகும்.
+              </p>
+              <div class="poet-stats">
+                <div class="poet-stat">
+                  <span class="icon-animated icon-pulse">📚</span>
+                  <strong>133</strong>
+                  <small>அதிகாரங்கள்</small>
+                </div>
+                <div class="poet-stat">
+                  <span class="icon-animated icon-pulse">✍️</span>
+                  <strong>1,330</strong>
+                  <small>குறள்கள்</small>
+                </div>
+                <div class="poet-stat">
+                  <span class="icon-animated icon-pulse">🌍</span>
+                  <strong>40+</strong>
+                  <small>மொழிபெயர்ப்புகள்</small>
+                </div>
+              </div>
+              <div class="poet-highlights-list">
+                <p><span class="icon-animated icon-float">🪷</span> <strong>அறத்துப்பால்</strong> — அறம், இல்லறம்,
+                  துறவறம் பற்றிய குறள்கள்</p>
+                <p><span class="icon-animated icon-float">👑</span> <strong>பொருட்பால்</strong> — அரசியல், அமைச்சியல்,
+                  நட்பு பற்றிய குறள்கள்</p>
+                <p><span class="icon-animated icon-float">💕</span> <strong>காமத்துப்பால்</strong> — காதல் மற்றும்
+                  இன்பம் பற்றிய குறள்கள்</p>
+              </div>
+              <blockquote class="poet-quote">
+                <span class="icon-animated icon-glow">💎</span>
+                "அகர முதல எழுத்தெல்லாம் ஆதி பகவன் முதற்றே உலகு"
+                <cite>— திருக்குறள், அதிகாரம் 1</cite>
+              </blockquote>
+            </div>
+
+            <!-- Bharathiyar Details -->
+            <div class="poet-detail-card">
+              <div class="poet-detail-header">
+                <span class="icon-animated icon-bounce">🔥</span>
+                <h3>பாரதியார் (Bharathiyar)</h3>
+              </div>
+              <p class="poet-period"><span class="icon-animated icon-glow">🕰️</span> காலம்: 1882 – 1921 (எட்டயபுரம்,
+                தமிழ்நாடு)</p>
+              <p>சுப்பிரமணிய பாரதியார் ஒரு புரட்சிக் கவிஞர், சுதந்திரப் போராட்ட வீரர் மற்றும் சமூக சீர்திருத்தவாதி
+                ஆவார். தமிழ் இலக்கியத்தில் <strong>மகாகவி</strong> என போற்றப்படுகிறார்.</p>
+              <div class="poet-stats">
+                <div class="poet-stat">
+                  <span class="icon-animated icon-pulse">📕</span>
+                  <strong>பாஞ்சாலி சபதம்</strong>
+                  <small>காவியம்</small>
+                </div>
+                <div class="poet-stat">
+                  <span class="icon-animated icon-pulse">📗</span>
+                  <strong>கண்ணன் பாட்டு</strong>
+                  <small>பக்தி</small>
+                </div>
+                <div class="poet-stat">
+                  <span class="icon-animated icon-pulse">📘</span>
+                  <strong>குயில் பாட்டு</strong>
+                  <small>காதல்</small>
+                </div>
+              </div>
+              <div class="poet-highlights-list">
+                <p><span class="icon-animated icon-float">⚔️</span> <strong>சுதந்திரம்</strong> — இந்திய விடுதலைக்காக
+                  எழுதிய தேசபக்தி பாடல்கள்</p>
+                <p><span class="icon-animated icon-float">👩</span> <strong>பெண் விடுதலை</strong> — பெண்கள் கல்வி,
+                  சமத்துவம் பற்றி போராடினார்</p>
+                <p><span class="icon-animated icon-float">🌊</span> <strong>சமூக சீர்திருத்தம்</strong> — சாதி ஒழிப்பு,
+                  ஜனநாயகம் பற்றி எழுதினார்</p>
+              </div>
+              <blockquote class="poet-quote">
+                <span class="icon-animated icon-glow">💎</span>
+                "ஆடுவோமே பள்ளு பாடுவோமே — ஆனந்த சுதந்திரம் அடைந்துவிட்டோமென்று"
+                <cite>— மகாகவி பாரதியார்</cite>
+              </blockquote>
+            </div>
+          </div>
+
+          <!-- ===== Inspirational Figures for the Blind ===== -->
+          <div class="inspirational-section">
+            <h2 class="inspirational-heading" id="inspirational-title">
+              <span class="icon-animated icon-glow">🌟</span> பார்வையற்றோருக்கு ஒளி தந்தவர்கள் — Inspirational Figures
+            </h2>
+            <div class="section-divider" style="margin-bottom:32px;"></div>
+
+            <div class="inspirational-grid">
+
+              <!-- Helen Keller -->
+              <div class="inspirational-card">
+                <div class="inspirational-img-frame" role="img" aria-label="Helen Keller portrait">
+                  <img src="helen_keller.png" alt="ஹெலன் கெல்லர் - Helen Keller"
+                    style="width:100%;height:100%;object-fit:cover;">
+                </div>
+                <div class="inspirational-info">
+                  <h3><span class="icon-animated icon-bounce">💡</span> ஹெலன் கெல்லர் (Helen Keller)</h3>
+                  <p class="inspirational-period"><span class="icon-animated icon-glow">🕰️</span> காலம்: 1880 – 1968
+                    (அமெரிக்கா)</p>
+                  <p>
+                    ஹெலன் கெல்லர் ஒரு அமெரிக்க எழுத்தாளர், அரசியல் செயல்பாட்டாளர் மற்றும் விரிவுரையாளர் ஆவார்.
+                    19 மாத குழந்தையாக இருக்கும்போது நோயால் பார்வையையும் கேட்கும் திறனையும் இழந்தார்.
+                    ஆனாலும், <strong>கலைக்கல்லூரியில் பட்டம் பெற்ற முதல் பார்வையற்ற மற்றும் காதுகேளாத நபர்</strong>
+                    ஆனார்.
+                  </p>
+                  <p>
+                    தனது ஆசிரியர் <strong>ஆனி சல்லிவன்</strong> உதவியுடன் படிக்கவும் எழுதவும் பேசவும் கற்றுக்கொண்டார்.
+                    12 புத்தகங்கள் எழுதினார். உலகம் முழுவதும் மாற்றுத்திறனாளிகளின் உரிமைக்காக போராடினார்.
+                  </p>
+                  <blockquote class="poet-quote">
+                    <span class="icon-animated icon-glow">💎</span>
+                    "இருளிலும் ஒளி உண்டு, மௌனத்திலும் இசை உண்டு" — "The best and most beautiful things in the world
+                    cannot be seen or even touched — they must be felt with the heart."
+                    <cite>— ஹெலன் கெல்லர்</cite>
+                  </blockquote>
+                </div>
+              </div>
+
+              <!-- Louis Braille -->
+              <div class="inspirational-card">
+                <div class="inspirational-img-frame" role="img" aria-label="Louis Braille portrait">
+                  <img src="louis_braille.png" alt="லூயி பிரெயில் - Louis Braille"
+                    style="width:100%;height:100%;object-fit:cover;">
+                </div>
+                <div class="inspirational-info">
+                  <h3><span class="icon-animated icon-bounce">📖</span> லூயி பிரெயில் (Louis Braille)</h3>
+                  <p class="inspirational-period"><span class="icon-animated icon-glow">🕰️</span> காலம்: 1809 – 1852
+                    (பிரான்ஸ்)</p>
+                  <p>
+                    லூயி பிரெயில் ஒரு பிரெஞ்சு கல்வியாளர் மற்றும் கண்டுபிடிப்பாளர் ஆவார்.
+                    3 வயதில் தந்தையின் பட்டறையில் விபத்தால் பார்வையை இழந்தார்.
+                    <strong>பார்வையற்றோர் படிக்கவும் எழுதவும் உதவும் "பிரெயில் எழுத்து முறை"யை</strong> கண்டுபிடித்தார்.
+                  </p>
+                  <p>
+                    வெறும் 15 வயதில் இந்த புரட்சிகரமான எழுத்து முறையை உருவாக்கினார்.
+                    இன்று உலகின் அனைத்து மொழிகளிலும் பிரெயில் எழுத்து முறை பயன்படுத்தப்படுகிறது.
+                    இது <strong>6 புள்ளிகள்</strong> கொண்ட எளிய ஆனால் மிகச்சிறந்த முறையாகும்.
+                  </p>
+                  <blockquote class="poet-quote">
+                    <span class="icon-animated icon-glow">💎</span>
+                    "அணுகல் என்பது அன்பின் மொழி" — "Access to communication in the widest sense is access to knowledge."
+                    <cite>— லூயி பிரெயில்</cite>
+                  </blockquote>
+                </div>
+              </div>
+
+              <!-- Andhagakkavi Veeraragava Mudaliar -->
+              <div class="inspirational-card">
+                <div class="inspirational-img-frame" role="img" aria-label="Andhagakkavi Veeraragava Mudaliar portrait">
+                  <img src="veeraragava_mudaliar.png"
+                    alt="அந்தகக்கவி வீரராகவ முதலியார் - Andhagakkavi Veeraragava Mudaliar"
+                    style="width:100%;height:100%;object-fit:cover;">
+                </div>
+                <div class="inspirational-info">
+                  <h3><span class="icon-animated icon-bounce">🎭</span> அந்தகக்கவி வீரராகவ முதலியார்</h3>
+                  <p class="inspirational-period"><span class="icon-animated icon-glow">🕰️</span> காலம்: 1757 – 1834
+                    (தமிழ்நாடு, இந்தியா)</p>
+                  <p>
+                    அந்தகக்கவி வீரராகவ முதலியார் ஒரு புகழ்பெற்ற <strong>பார்வையற்ற தமிழ் கவிஞர்</strong> ஆவார்.
+                    பிறவிக் குருடராக இருந்தும், தமிழ் இலக்கியத்தில் மிகச் சிறந்த படைப்புகளை உருவாக்கினார்.
+                    "அந்தகக்கவி" என்ற பட்டம் "குருடான கவிஞர்" என்று பொருள்படும்.
+                  </p>
+                  <p>
+                    இவர் சென்னை சீனிவாச பிள்ளை மடத்தின் தலைவரிடம் தமிழ் இலக்கியம் கற்றார்.
+                    <strong>திருவரங்கக் கலம்பகம்</strong>, <strong>சூரபத்ம நாடகம்</strong> போன்ற சிறந்த படைப்புகளை
+                    இயற்றினார்.
+                    பார்வை இல்லாமலே கற்பனை வளத்தால் அழகான கவிதைகளை படைத்தார்.
+                  </p>
+                  <blockquote class="poet-quote">
+                    <span class="icon-animated icon-glow">💎</span>
+                    "கண் இல்லாவிட்டாலும் கவிதை கண் உண்டு — பார்வை இல்லாமல் பாரினை வென்றவர்"
+                    <cite>— அந்தகக்கவி வீரராகவ முதலியார்</cite>
+                  </blockquote>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="hero-cta">
+            <button class="btn btn-primary" data-navigate="padaipukal" aria-label="கவிதை எழுதுங்கள்">
+              <span class="icon-animated icon-bounce">✍</span> கவிதை எழுதுங்கள்
+            </button>
+            <button class="btn btn-outline" data-navigate="trust" aria-label="அறக்கட்டளை பற்றி">
+              <span class="icon-animated icon-float">🏛️</span> அறக்கட்டளை பற்றி
+            </button>
+            <button class="btn btn-outline" data-navigate="about" aria-label="ஆசிரியரைப் பற்றி">
+              <span class="icon-animated icon-float">👤</span> ஆசிரியரைப் பற்றி
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== PADAIPUKAL (Poetry) ==================== -->
+    <section class="section" id="padaipukal" aria-labelledby="padaipukal-title">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title" id="padaipukal-title">✍ படைப்புகள் — கவிதைகள்</h2>
+          <div class="section-divider"></div>
+          <p class="section-subtitle">உங்கள் கவிதைகளை எழுதி, நேரடியாக பதிவேற்றுங்கள்</p>
+        </div>
+
+        <!-- Poetry Writing Form -->
+        <div class="poetry-form-container">
+          <h3 style="color: var(--secondary); font-family: var(--font-tamil); margin-bottom: 24px; font-size: 1.3rem;">
+            புதிய படைப்பை எழுதுங்கள்
+          </h3>
+          <form id="poetry-form" aria-label="கவிதை எழுதும் படிவம்">
+            <div class="form-group">
+              <label for="poem-title" class="form-label">தலைப்பு (Title) *</label>
+              <input type="text" id="poem-title" class="form-input" placeholder="உங்கள் கவிதையின் தலைப்பு..." required
+                aria-required="true">
+            </div>
+            <div class="form-group">
+              <label for="poem-type" class="form-label">வகை (Type)</label>
+              <select id="poem-type" class="form-select" aria-label="படைப்பு வகை">
+                <option value="kavithai">கவிதை (Kavithai)</option>
+                <option value="katurai">கட்டுரை (Katurai)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="poem-body" class="form-label">உள்ளடக்கம் (Content) *</label>
+              <textarea id="poem-body" class="form-textarea" placeholder="உங்கள் கவிதையை இங்கே எழுதுங்கள்..." required
+                aria-required="true"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+              📤 பதிவேற்று (Publish)
+            </button>
+          </form>
+        </div>
+
+        <!-- Poetry Grid -->
+        <h3
+          style="color: var(--text-secondary); margin-bottom: 16px; font-family: var(--font-tamil); font-size: 1.2rem;">
+          📖 வெளியிடப்பட்ட கவிதைகள்
+        </h3>
+        <div class="poetry-grid" id="kavithai-grid" role="feed" aria-label="Published poems">
+          <!-- Poems rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== KATURAIKAL (Essays) ==================== -->
+    <section class="section" id="katuraikal" aria-labelledby="katuraikal-title">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title" id="katuraikal-title">📜 கட்டுரைகள்</h2>
+          <div class="section-divider"></div>
+          <p class="section-subtitle">சிந்தனையை தூண்டும் கட்டுரைகள்</p>
+        </div>
+
+        <div class="poetry-grid" id="katurai-grid" role="feed" aria-label="Published essays">
+          <!-- Essays rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ABOUT ==================== -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title" id="about-title">👤 ஆசிரியரைப் பற்றி</h2>
+          <div class="section-divider"></div>
+        </div>
+
+        <div class="about-content">
+          <!-- Author Photo -->
+          <div class="author-photo-frame" role="img" aria-label="Photo of Chandrasekara P">
+            <img src="author.jpg" alt="சந்திரசேகர் P - Chandrasekara P, Tamil Professor"
+              style="width:100%;height:100%;object-fit:cover;">
+          </div>
+
+          <!-- Author Bio -->
+          <div class="about-text">
+            <h3>சந்திரசேகர் P</h3>
+            <p class="author-title">முதுகலை தமிழ் ஆசிரியர் | கவிஞர் | எழுத்தாளர்</p>
+
+            <p>
+              சந்திரசேகர் P அவர்கள் ஒரு புகழ்பெற்ற <strong>முதுகலை தமிழ் ஆசிரியர்</strong> ஆவார்.
+              இவர் தமிழ் இலக்கியம், கவிதை மற்றும் மொழியியல் துறையில் பல ஆண்டுகால அனுபவம் கொண்டவர்.
+            </p>
+
+            <div class="qualifications-section">
+              <h4><span class="icon-animated icon-bounce">🎓</span> கல்வித் தகுதி (Qualifications)</h4>
+              <div class="qualifications-grid">
+                <div class="qualification-badge"><span class="icon-animated icon-pulse">📘</span> BA Tamil (தமிழ்
+                  இளங்கலை)</div>
+                <div class="qualification-badge"><span class="icon-animated icon-pulse">📗</span> MA Tamil (தமிழ்
+                  முதுகலை)</div>
+                <div class="qualification-badge"><span class="icon-animated icon-pulse">📕</span> B.Ed Tamil (தமிழ்
+                  கல்வியியல்)</div>
+                <div class="qualification-badge"><span class="icon-animated icon-pulse">📙</span> M.Phil Tamil (தமிழ்
+                  எம்.ஃபில்)</div>
+              </div>
+            </div>
+
+            <p>
+              <strong>அக தீப ஒளி பார்வையற்றோர் நல அறக்கட்டளை மற்றும் இல்லம்</strong>யின்
+              மூலமாக, பார்வையற்றோர் மற்றும் அனைத்து மக்களுக்கும் தமிழ் இலக்கியத்தை
+              கொண்டு சேர்க்கும் உன்னத பணியை மேற்கொண்டு வருகிறார்.
+            </p>
+            <p>
+              இவரது படைப்புகள் அன்பு, ஒளி, இயற்கை மற்றும் சமூக உணர்வுகளை
+              பிரதிபலிக்கின்றன. தமிழ் கவிதையின் மூலம் மனிதநேயத்தை பரப்புவதே
+              இவரது கொள்கை.
+            </p>
+
+            <div class="about-highlights">
+              <div class="highlight-card">
+                <div class="icon">📚</div>
+                <div class="label">துறை</div>
+                <div class="value">தமிழ் இலக்கியம்</div>
+              </div>
+              <div class="highlight-card">
+                <div class="icon">🎓</div>
+                <div class="label">பதவி</div>
+                <div class="value">முதுகலை தமிழ் ஆசிரியர்</div>
+              </div>
+              <div class="highlight-card">
+                <div class="icon">✍️</div>
+                <div class="label">உள்ளடக்கம்</div>
+                <div class="value">கவிதை & கட்டுரை</div>
+              </div>
+              <div class="highlight-card">
+                <div class="icon">🪔</div>
+                <div class="label">அறக்கட்டளை</div>
+                <div class="value">AGA DEEPA OLI</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TRUST (Aga Deeba Oli Blind Welfare) ==================== -->
+    <section class="section" id="trust" aria-labelledby="trust-title">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title" id="trust-title">🏛️ அக தீப ஒளி பார்வையற்றோர் நல அறக்கட்டளை</h2>
+          <div class="section-divider"></div>
+          <p class="section-subtitle">Aga Deeba Oli Blind Welfare Trust And Home — Thirunindravur, Chennai</p>
+        </div>
+
+        <!-- Trust Hero Banner -->
+        <div class="trust-hero">
+          <div class="trust-hero-content">
+            <span class="trust-hero-icon icon-animated icon-glow">🪔</span>
+            <h3>பார்வையற்றோருக்கு ஒளி ஏற்றும் அறக்கட்டளை</h3>
+            <p>Aga Deeba Oli Blind Welfare Trust And Home is an NGO based in <strong>Thirunindravur, Chennai</strong>,
+              dedicated to supporting visually impaired individuals. This trust has been helping many people
+              lead dignified and empowered lives.</p>
+          </div>
+        </div>
+
+        <!-- Trust Description -->
+        <div class="trust-description">
+          <p>
+            <span class="icon-animated icon-float">🌟</span>
+            <strong>அக தீப ஒளி பார்வையற்றோர் நல அறக்கட்டளை மற்றும் இல்லம்</strong> —
+            சென்னை திருநின்றவூரில் அமைந்துள்ள இந்த அறக்கட்டளை, பார்வையற்ற
+            நபர்களுக்கு ஆதரவு அளிப்பதில் அர்ப்பணிப்புடன் செயல்படுகிறது.
+            இந்த அறக்கட்டளை பல நபர்களுக்கு உதவி செய்து வருகிறது.
+          </p>
+        </div>
+
+        <!-- Trust Services Grid -->
+        <div class="trust-services">
+          <h3 class="trust-services-title"><span class="icon-animated icon-bounce">🤝</span> எங்கள் சேவைகள் (Our
+            Services)</h3>
+          <div class="trust-services-grid">
+            <div class="trust-service-card">
+              <span class="trust-service-icon icon-animated icon-pulse">🏠</span>
+              <h4>தங்கும் வசதி</h4>
+              <p>பார்வையற்றோருக்கு பாதுகாப்பான தங்கும் இல்லம் வழங்குதல்</p>
+            </div>
+            <div class="trust-service-card">
+              <span class="trust-service-icon icon-animated icon-pulse">📚</span>
+              <h4>கல்வி</h4>
+              <p>பிரெயில் கல்வி மற்றும் தொழில்நுட்ப பயிற்சி</p>
+            </div>
+            <div class="trust-service-card">
+              <span class="trust-service-icon icon-animated icon-pulse">💼</span>
+              <h4>வேலைவாய்ப்பு</h4>
+              <p>தொழில் பயிற்சி மற்றும் வேலை வாய்ப்புகள் உதவி</p>
+            </div>
+            <div class="trust-service-card">
+              <span class="trust-service-icon icon-animated icon-pulse">🩺</span>
+              <h4>மருத்துவம்</h4>
+              <p>கண் சிகிச்சை மற்றும் ஆலோசனை சேவைகள்</p>
+            </div>
+            <div class="trust-service-card">
+              <span class="trust-service-icon icon-animated icon-pulse">🎭</span>
+              <h4>கலை & கலாச்சாரம்</h4>
+              <p>இசை, நாடகம் மற்றும் கலை பயிற்சிகள்</p>
+            </div>
+            <div class="trust-service-card">
+              <span class="trust-service-icon icon-animated icon-pulse">❤️</span>
+              <h4>சமூக ஆதரவு</h4>
+              <p>உளவியல் ஆலோசனை மற்றும் குடும்ப ஆதரவு</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- YouTube Section -->
+        <div class="trust-youtube">
+          <h3><span class="icon-animated icon-bounce">📺</span> எங்கள் யூடியூப் சேனல் (Our YouTube Channel)</h3>
+          <p class="trust-youtube-desc">எங்கள் அறக்கட்டளையின் நிகழ்வுகள், நேர்காணல்கள் மற்றும் சேவை பற்றிய வீடியோக்கள்:
+          </p>
+          <div class="trust-youtube-embed">
+            <iframe src="https://www.youtube.com/embed?listType=user_uploads&list=agadeepaoli1548"
+              title="Aga Deepa Oli YouTube Channel" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen aria-label="Aga Deepa Oli YouTube channel videos"
+              style="width:100%;height:100%;border-radius:16px;"></iframe>
+          </div>
+          <a href="https://youtube.com/@agadeepaoli1548?si=W9y7ihVuV-7A65xG" target="_blank" rel="noopener noreferrer"
+            class="btn btn-primary trust-yt-btn" aria-label="Visit Aga Deepa Oli YouTube Channel">
+            <span class="icon-animated icon-bounce">▶️</span> யூடியூப் சேனலை பார்வையிடுங்கள் (Visit YouTube Channel)
+          </a>
+        </div>
+
+        <!-- Image Gallery -->
+        <div class="trust-gallery">
+          <h3><span class="icon-animated icon-bounce">📸</span> நிகழ்வு படங்கள் (Event Gallery)</h3>
+          <p class="trust-gallery-desc">எங்கள் அறக்கட்டளையின் நிகழ்வுகள் மற்றும் செயல்பாடுகளின் படங்கள்:</p>
+          <div class="trust-gallery-grid" id="trust-gallery-grid">
+            <!-- Gallery images loaded from database by JavaScript -->
+          </div>
+          <!-- Upload Section -->
+          <div class="trust-upload-section">
+            <label for="trust-image-upload" class="btn btn-outline trust-upload-btn"
+              aria-label="படங்களை பதிவேற்றுங்கள்">
+              <span class="icon-animated icon-bounce">📤</span> படங்களை பதிவேற்றுங்கள் (Upload Images)
+            </label>
+            <input type="file" id="trust-image-upload" accept="image/*" multiple style="display:none;"
+              aria-label="Choose images to upload">
+          </div>
+        </div>
+
+        <!-- Accessibility Note -->
+        <div class="trust-a11y-note" role="note" aria-label="Accessibility Information">
+          <span class="icon-animated icon-glow">♿</span>
+          <p>
+            <strong>அணுகல்தன்மை (Accessibility):</strong>
+            இந்தப் பக்கம் பார்வையற்றோருக்கு எளிதாக பயன்படுத்தும் வகையில் வடிவமைக்கப்பட்டுள்ளது.
+            பெரிய எழுத்து, உயர் மாறுபாடு நிலை, மற்றும் உரை-க்கு-பேச்சு வசதிகள் உள்ளன.
+            மேல் வலது பக்கத்தில் உள்ள A+, A-, ◐, 🔊 பொத்தான்களை பயன்படுத்தவும்.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CONTACT ==================== -->
+    <section class="section" id="contact" aria-labelledby="contact-title">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title" id="contact-title">📞 தொடர்பு கொள்ள</h2>
+          <div class="section-divider"></div>
+          <p class="section-subtitle">எங்களை தொடர்பு கொள்ள தயங்காதீர்கள்</p>
+        </div>
+
+        <div class="contact-grid">
+          <!-- Contact Info -->
+          <div class="contact-info-card">
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">👤</div>
+              <div class="contact-detail">
+                <h4>பெயர் (Name)</h4>
+                <p>Chandrasekar P</p>
+                <p style="font-size:0.9rem; color: var(--saffron);">சந்திரசேகர் P</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">📱</div>
+              <div class="contact-detail">
+                <h4>தொலைபேசி (Phone)</h4>
+                <a href="tel:+919940512193" aria-label="Call 9940512193">+91 99405 12193</a>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">🏠</div>
+              <div class="contact-detail">
+                <h4>அமைப்பு (Organization)</h4>
+                <p>AGA DEEPA OLI<br>Blind Home and Welfare Trust<br><small style="color:var(--text-secondary)">அக தீப
+                    ஒளி பார்வையற்றோர் நல அறக்கட்டளை மற்றும் இல்லம்</small></p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true">🪔</div>
+              <div class="contact-detail">
+                <h4>நோக்கம் (Mission)</h4>
+                <p>பார்வையற்றோருக்கு இலக்கிய ஒளி ஏற்றுதல்</p>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-icon" aria-hidden="true"><span class="icon-animated icon-bounce">📍</span></div>
+              <div class="contact-detail">
+                <h4>இடம் (Location)</h4>
+                <a href="https://maps.app.goo.gl/jaywjtsfwn51H8kS8" target="_blank" rel="noopener noreferrer"
+                  aria-label="Open location in Google Maps" class="location-link">
+                  <span class="icon-animated icon-pulse">🗺️</span> Google Maps-ல் இடத்தைக் காண தொடுங்கள்
+                </a>
+                <p style="font-size:0.85rem; margin-top:6px; opacity:0.7;">
+                  <span class="icon-animated icon-float">📌</span> அக தீப ஒளி பார்வையற்றோர் நல அறக்கட்டளை மற்றும் இல்லம்
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact Form -->
+          <div class="contact-form-card">
+            <h3>✉️ செய்தி அனுப்புங்கள்</h3>
+            <form onsubmit="handleContactForm(event)" aria-label="Contact form">
+              <div class="form-group">
+                <label for="contact-name" class="form-label">உங்கள் பெயர் *</label>
+                <input type="text" id="contact-name" class="form-input" placeholder="பெயர்..." required
+                  aria-required="true">
+              </div>
+              <div class="form-group">
+                <label for="contact-phone" class="form-label">தொலைபேசி எண்</label>
+                <input type="tel" id="contact-phone" class="form-input" placeholder="9876543210">
+              </div>
+              <div class="form-group">
+                <label for="contact-message" class="form-label">செய்தி *</label>
+                <textarea id="contact-message" class="form-textarea" placeholder="உங்கள் செய்தியை இங்கே எழுதுங்கள்..."
+                  required aria-required="true" style="min-height:120px;"></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">
+                📩 அனுப்பு (Send)
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <img src="logo.svg" alt="" width="40" height="40" aria-hidden="true">
+        <span>AGA DEEPA OLI — அக தீப ஒளி பார்வையற்றோர் நல அறக்கட்டளை மற்றும் இல்லம்</span>
+      </div>
+      <p class="footer-text">© 2026 அக தீப ஒளி. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.</p>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <!-- Scroll to Top -->
+  <button class="scroll-top" aria-label="Scroll to top" title="மேலே செல்ல">↑</button>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 320" width="300" height="320">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#FFD700" stop-opacity="0.8"/>
+      <stop offset="60%" stop-color="#FF8C00" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#FF8C00" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="flameGrad" cx="50%" cy="80%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="30%" stop-color="#FFD700"/>
+      <stop offset="70%" stop-color="#FF6600"/>
+      <stop offset="100%" stop-color="#FF4500"/>
+    </radialGradient>
+    <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B0000"/>
+      <stop offset="50%" stop-color="#DC143C"/>
+      <stop offset="100%" stop-color="#8B0000"/>
+    </linearGradient>
+    <linearGradient id="lampGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#DAA520"/>
+      <stop offset="50%" stop-color="#B8860B"/>
+      <stop offset="100%" stop-color="#8B6914"/>
+    </linearGradient>
+    <filter id="glowFilter">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Glow behind heart -->
+  <ellipse cx="150" cy="140" rx="120" ry="110" fill="url(#glow)"/>
+
+  <!-- Heart shape -->
+  <path d="M150 230 C150 230 50 170 50 110 C50 70 85 50 110 50 C130 50 145 65 150 75 C155 65 170 50 190 50 C215 50 250 70 250 110 C250 170 150 230 150 230Z"
+        fill="none" stroke="url(#heartGrad)" stroke-width="5" stroke-linejoin="round"/>
+
+  <!-- Lamp base -->
+  <ellipse cx="150" cy="185" rx="28" ry="8" fill="url(#lampGrad)" stroke="#8B6914" stroke-width="1"/>
+  <path d="M125 185 L130 170 L170 170 L175 185Z" fill="url(#lampGrad)" stroke="#8B6914" stroke-width="1"/>
+
+  <!-- Lamp stem -->
+  <rect x="145" y="135" width="10" height="35" rx="2" fill="url(#lampGrad)"/>
+
+  <!-- Lamp cup -->
+  <path d="M135 140 Q140 130 150 128 Q160 130 165 140 L162 145 L138 145Z" fill="url(#lampGrad)" stroke="#8B6914" stroke-width="1"/>
+
+  <!-- Oil in cup -->
+  <ellipse cx="150" cy="138" rx="12" ry="4" fill="#DAA520"/>
+
+  <!-- Flame -->
+  <g filter="url(#glowFilter)">
+    <path d="M150 100 Q155 110 156 118 Q156 125 150 128 Q144 125 144 118 Q145 110 150 100Z"
+          fill="url(#flameGrad)" opacity="0.95">
+      <animate attributeName="d" dur="0.8s" repeatCount="indefinite"
+        values="M150 100 Q155 110 156 118 Q156 125 150 128 Q144 125 144 118 Q145 110 150 100Z;
+                M150 98 Q156 112 157 118 Q156 126 150 128 Q143 126 143 118 Q144 112 150 98Z;
+                M150 100 Q155 110 156 118 Q156 125 150 128 Q144 125 144 118 Q145 110 150 100Z"/>
+    </path>
+    <!-- Inner flame -->
+    <path d="M150 110 Q153 116 153 120 Q153 125 150 127 Q147 125 147 120 Q147 116 150 110Z"
+          fill="#FFFFFF" opacity="0.8">
+      <animate attributeName="d" dur="0.6s" repeatCount="indefinite"
+        values="M150 110 Q153 116 153 120 Q153 125 150 127 Q147 125 147 120 Q147 116 150 110Z;
+                M150 108 Q154 117 154 121 Q153 126 150 127 Q146 126 146 121 Q146 117 150 108Z;
+                M150 110 Q153 116 153 120 Q153 125 150 127 Q147 125 147 120 Q147 116 150 110Z"/>
+    </path>
+  </g>
+
+  <!-- Trust Name -->
+  <text x="150" y="260" text-anchor="middle" font-family="Georgia, serif" font-size="13" font-weight="bold" fill="#8B0000" letter-spacing="1.5">AGA DEEPA OLI</text>
+  <text x="150" y="280" text-anchor="middle" font-family="Georgia, serif" font-size="8" fill="#333" letter-spacing="0.5">பார்வையற்றோர் நல அறக்கட்டளை மற்றும் இல்லம்</text>
+</svg>
