@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aga-deepa-oli.onrender.com/sitemap.xml

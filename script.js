@@ -306,16 +306,15 @@ function setupAccessibility() {
   }
 }
 
-// ---- Text-to-Speech Engine (Google Tamil Voice) ----
+// ---- Text-to-Speech Engine (Web Speech API) ----
 // Works on Desktop and Mobile (Android/iOS)
 
 let googleTamilVoice = null;
-let isMobile = /Android|iPhone|iPad|iPod|Opera Mini|IEMobile/i.test(navigator.userAgent);
-let keepAliveTimer = null;
 let speechChunks = [];
 let speechIndex = 0;
+let speakingInterval = null;
 
-// Pre-load Tamil voice (retry multiple times for mobile)
+// Pre-load Tamil voice
 function loadGoogleVoice() {
   if (!('speechSynthesis' in window)) return;
   const voices = window.speechSynthesis.getVoices();
@@ -324,57 +323,41 @@ function loadGoogleVoice() {
     || voices.find(v => v.lang === 'ta-IN')
     || voices.find(v => v.lang.startsWith('ta'))
     || voices.find(v => v.name.toLowerCase().includes('tamil'))
-    || voices.find(v => v.lang === 'hi-IN')
-    || voices.find(v => v.lang.includes('en-IN'))
     || voices[0];
   console.log('TTS Voice:', googleTamilVoice ? googleTamilVoice.name : 'none');
 }
+
 if ('speechSynthesis' in window) {
   window.speechSynthesis.onvoiceschanged = loadGoogleVoice;
   setTimeout(loadGoogleVoice, 500);
-  setTimeout(loadGoogleVoice, 2000);
 }
 
 function stopSpeaking() {
   STATE.speaking = false;
   speechChunks = [];
   speechIndex = 0;
-  clearInterval(keepAliveTimer);
+  clearInterval(speakingInterval);
   if ('speechSynthesis' in window) {
     window.speechSynthesis.cancel();
-  }
-  // Stop mobile audio if playing
-  if (typeof currentMobileAudio !== 'undefined' && currentMobileAudio) {
-    currentMobileAudio.pause();
-    currentMobileAudio = null;
-  }
-  if (typeof mobileAudioQueue !== 'undefined') {
-    mobileAudioQueue = [];
   }
   showToast('வாசிப்பு நிறுத்தப்பட்டது ⏹️');
 }
 
 function cleanTextForSpeech(text) {
   return text
-    .replace(/[\u{1F600}-\u{1F9FF}]/gu, '')
-    .replace(/[\u{2600}-\u{27BF}]/gu, '')
-    .replace(/[\u{1F300}-\u{1F5FF}]/gu, '')
-    .replace(/[\u{1F680}-\u{1F6FF}]/gu, '')
-    .replace(/[\u{1FA00}-\u{1FA6F}]/gu, '')
-    .replace(/[\u{1FA70}-\u{1FAFF}]/gu, '')
-    .replace(/[\u{2702}-\u{27B0}]/gu, '')
+    .replace(/[\u{1F600}-\u{1FAFF}]/gu, '') // Remove emojis
     .replace(/[*#_\-=|↑→←]/g, ' ')
     .replace(/A\+|A\-/g, '')
     .replace(/\s+/g, ' ')
     .trim();
 }
 
+// Split into small chunks to prevent Speech API from silently stopping (Chrome bug)
 function splitIntoSmallChunks(text) {
   const chunks = [];
-  // Split by sentence endings, commas, or newlines
   const parts = text.split(/([.!?,;:\n।]+\s*)/);
-
   let current = '';
+
   for (let i = 0; i < parts.length; i++) {
     const part = parts[i].trim();
     if (!part) continue;
@@ -387,31 +370,15 @@ function splitIntoSmallChunks(text) {
     }
   }
   if (current.trim()) chunks.push(current.trim());
-
-  // If we still got chunks too long, break by spaces
-  const finalChunks = [];
-  for (const chunk of chunks) {
-    if (chunk.length > 100) {
-      const words = chunk.split(/\s+/);
-      let temp = '';
-      for (const word of words) {
-        if (temp.length + word.length > 80) {
-          if (temp) finalChunks.push(temp);
-          temp = word;
-        } else {
-          temp = temp ? temp + ' ' + word : word;
-        }
-      }
-      if (temp) finalChunks.push(temp);
-    } else {
-      finalChunks.push(chunk);
-    }
-  }
-
-  return finalChunks.filter(c => c.length > 0);
+  return chunks.filter(c => c.length > 0);
 }
 
 function speakText(text) {
+  if (!('speechSynthesis' in window)) {
+    showToast('குரல் வாசிப்பு உங்கள் உலாவியில் ஆதரிக்கப்படவில்லை ❌');
+    return;
+  }
+
   if (STATE.speaking) {
     stopSpeaking();
     return;
@@ -423,149 +390,60 @@ function speakText(text) {
     return;
   }
 
-  const maxLen = isMobile ? 300 : 1000;
-  if (cleanText.length > maxLen) cleanText = cleanText.substring(0, maxLen);
-
   STATE.speaking = true;
   showToast('வாசிக்கிறது... 🔊');
-
-  if (isMobile) {
-    // MOBILE: Google Translate Audio (works perfectly for Tamil)
-    mobileSpeakWithGoogleTTS(cleanText);
-  } else {
-    // DESKTOP: Chunk-based Web Speech API
-    if (!googleTamilVoice) loadGoogleVoice();
-    window.speechSynthesis.cancel();
-    speechChunks = splitIntoSmallChunks(cleanText);
-    speechIndex = 0;
-    speakNextChunk();
-  }
-}
-
-// ---- MOBILE: Google Translate TTS via Audio ----
-let mobileAudioQueue = [];
-let currentMobileAudio = null;
-
-function mobileSpeakWithGoogleTTS(text) {
-  // Split text into ~180 char chunks for Google TTS limit
-  const chunks = [];
-  const sentences = text.split(/[.!?,;:\n।]+/).filter(s => s.trim().length > 1);
-  let current = '';
-  for (const s of sentences) {
-    const trimmed = s.trim();
-    if (!trimmed) continue;
-    if ((current + ' ' + trimmed).length > 180) {
-      if (current) chunks.push(current);
-      current = trimmed.length > 180 ? trimmed.substring(0, 180) : trimmed;
-    } else {
-      current = current ? current + '. ' + trimmed : trimmed;
-    }
-  }
-  if (current) chunks.push(current);
-  if (chunks.length === 0) chunks.push(text.substring(0, 180));
-
-  mobileAudioQueue = chunks.map(chunk => {
-    const encoded = encodeURIComponent(chunk);
-    return `https://translate.google.com/translate_tts?ie=UTF-8&q=${encoded}&tl=ta&client=tw-ob`;
-  });
-
-  playMobileAudioChunk();
-}
-
-function playMobileAudioChunk() {
-  if (mobileAudioQueue.length === 0 || !STATE.speaking) {
-    STATE.speaking = false;
-    currentMobileAudio = null;
-    mobileAudioQueue = [];
-    showToast('வாசிப்பு முடிந்தது ✅');
-    return;
-  }
-
-  const url = mobileAudioQueue.shift();
-  currentMobileAudio = new Audio(url);
-
-  currentMobileAudio.onended = function () {
-    playMobileAudioChunk();
-  };
-
-  currentMobileAudio.onerror = function () {
-    // Google TTS failed (CORS/network) — try Speech API fallback
-    console.log('Google TTS failed on mobile, trying Speech API');
-    currentMobileAudio = null;
-    mobileAudioQueue = [];
-    mobileFallbackSpeechAPI(decodeURIComponent(url.split('q=')[1].split('&')[0]));
-  };
-
-  currentMobileAudio.play().catch(function () {
-    // Autoplay blocked — try Speech API fallback
-    currentMobileAudio = null;
-    mobileAudioQueue = [];
-    mobileFallbackSpeechAPI(decodeURIComponent(url.split('q=')[1].split('&')[0]));
-  });
-}
-
-function mobileFallbackSpeechAPI(text) {
-  if (!('speechSynthesis' in window)) {
-    STATE.speaking = false;
-    showToast('குரல் வாசிப்பு ஆதரிக்கப்படவில்லை ❌');
-    return;
-  }
 
   if (!googleTamilVoice) loadGoogleVoice();
   window.speechSynthesis.cancel();
 
-  const utterance = new SpeechSynthesisUtterance(text);
-  if (googleTamilVoice) {
-    utterance.voice = googleTamilVoice;
-    utterance.lang = googleTamilVoice.lang;
-  } else {
-    utterance.lang = 'ta-IN';
-  }
-  utterance.rate = 0.9;
-  utterance.pitch = 1;
-  utterance.volume = 1;
+  speechChunks = splitIntoSmallChunks(cleanText);
+  speechIndex = 0;
+  speakNextChunk();
 
-  utterance.onend = function () {
-    STATE.speaking = false;
-    showToast('வாசிப்பு முடிந்தது ✅');
-  };
-  utterance.onerror = function () {
-    STATE.speaking = false;
-    showToast('குரல் வாசிப்பு பிழை ❌');
-  };
-
-  window.speechSynthesis.speak(utterance);
+  // Keep-alive interval for Android Chrome which might pause synthesis
+  clearInterval(speakingInterval);
+  speakingInterval = setInterval(() => {
+    if (!STATE.speaking) {
+      clearInterval(speakingInterval);
+      return;
+    }
+    if (window.speechSynthesis.speaking && !window.speechSynthesis.paused) {
+      window.speechSynthesis.pause();
+      window.speechSynthesis.resume();
+    }
+  }, 10000);
 }
 
-// ---- DESKTOP: Chunk-based Speech API ----
 function speakNextChunk() {
   if (speechIndex >= speechChunks.length || !STATE.speaking) {
-    STATE.speaking = false;
-    speechChunks = [];
-    speechIndex = 0;
+    stopSpeaking();
     showToast('வாசிப்பு முடிந்தது ✅');
     return;
   }
 
-  const chunk = speechChunks[speechIndex];
-  speechIndex++;
-
+  const chunk = speechChunks[speechIndex++];
   const utterance = new SpeechSynthesisUtterance(chunk);
+
   if (googleTamilVoice) {
     utterance.voice = googleTamilVoice;
     utterance.lang = googleTamilVoice.lang;
   } else {
     utterance.lang = 'ta-IN';
   }
+
   utterance.rate = 0.9;
   utterance.pitch = 1;
   utterance.volume = 1;
 
-  utterance.onend = function () {
-    setTimeout(speakNextChunk, 100);
+  utterance.onend = () => {
+    if (STATE.speaking) setTimeout(speakNextChunk, 100);
   };
-  utterance.onerror = function (e) {
-    if (e.error !== 'canceled') setTimeout(speakNextChunk, 150);
+
+  utterance.onerror = (e) => {
+    console.error('TTS Error:', e);
+    if (e.error !== 'canceled' && STATE.speaking) {
+      setTimeout(speakNextChunk, 150);
+    }
   };
 
   window.speechSynthesis.speak(utterance);
@@ -661,12 +539,16 @@ function setupTrustGallery() {
     if (!files || files.length === 0) return;
 
     for (const file of files) {
-      if (!file.type.startsWith('image/')) continue;
+      if (
+        !file.type.startsWith('image/') &&
+        !file.type.startsWith('video/') &&
+        file.type !== 'application/pdf'
+      ) continue;
 
       try {
         const formData = new FormData();
         formData.append('image', file);
-        formData.append('alt', 'அறக்கட்டளை நிகழ்வு படம்');
+        formData.append('alt', file.name);
 
         const res = await fetch('/api/images', {
           method: 'POST',
@@ -707,13 +589,28 @@ async function loadGalleryImages() {
   }
 }
 
-// ---- Add Single Image to Gallery Grid ----
-function addGalleryImageToGrid(img, galleryGrid) {
+// ---- Add Single Image/Video/PDF to Gallery Grid ----
+function addGalleryImageToGrid(itemData, galleryGrid) {
   const item = document.createElement('div');
   item.className = 'trust-gallery-item';
-  item.setAttribute('data-gallery-id', img.id);
-  item.innerHTML = `<img src="${img.url}" alt="${img.alt || 'அறக்கட்டளை நிகழ்வு படம்'}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">
-    <button class="gallery-delete-btn" onclick="deleteGalleryImage(this)" aria-label="படத்தை நீக்கு" title="நீக்கு">✕</button>`;
+  item.setAttribute('data-gallery-id', itemData.id);
+
+  let mediaContent = '';
+
+  if (itemData.mimetype && itemData.mimetype.startsWith('video/')) {
+    mediaContent = `<video src="${itemData.url}" controls style="width:100%;height:100%;object-fit:cover;border-radius:12px;"></video>`;
+  } else if (itemData.mimetype === 'application/pdf') {
+    mediaContent = `
+      <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;background:#f0f4f8;border-radius:12px;color:var(--primary);">
+        <span style="font-size:3rem;margin-bottom:8px;">📄</span>
+        <a href="${itemData.url}" target="_blank" style="color:var(--primary);font-weight:bold;text-decoration:none;background:var(--secondary);color:white;padding:4px 12px;border-radius:20px;font-size:0.9rem;">PDF படிக்கவும்</a>
+      </div>`;
+  } else {
+    mediaContent = `<img src="${itemData.url}" alt="${itemData.alt || 'அறக்கட்டளை நிகழ்வு'}" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">`;
+  }
+
+  item.innerHTML = `${mediaContent}
+    <button class="gallery-delete-btn" onclick="deleteGalleryImage(this)" aria-label="நீக்கு" title="நீக்கு">✕</button>`;
   galleryGrid.appendChild(item);
 }
 

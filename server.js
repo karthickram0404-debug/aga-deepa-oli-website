@@ -29,7 +29,7 @@ if (!fs.existsSync(UPLOADS_DIR)) {
 }
 app.use('/uploads', express.static(UPLOADS_DIR));
 
-// ---- Multer (Image Upload) ----
+// ---- Multer (Image/Video/PDF Upload) ----
 const storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, UPLOADS_DIR),
     filename: (req, file, cb) => {
@@ -39,18 +39,22 @@ const storage = multer.diskStorage({
 });
 const upload = multer({
     storage,
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB max
+    limits: { fileSize: 50 * 1024 * 1024 }, // 50 MB max
     fileFilter: (req, file, cb) => {
-        if (file.mimetype.startsWith('image/')) {
+        if (
+            file.mimetype.startsWith('image/') ||
+            file.mimetype.startsWith('video/') ||
+            file.mimetype === 'application/pdf'
+        ) {
             cb(null, true);
         } else {
-            cb(new Error('Only image files are allowed'), false);
+            cb(new Error('Only image, video, and PDF files are allowed'), false);
         }
     }
 });
 
 // ---- Database ----
-const DB_PATH = path.join(__dirname, 'agadeepaoli.db');
+const DB_PATH = path.join(UPLOADS_DIR, 'agadeepaoli.db');
 let db;
 
 function saveDatabase() {
@@ -88,10 +92,16 @@ async function initDatabase() {
     CREATE TABLE IF NOT EXISTS gallery_images (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       filename TEXT NOT NULL,
-      alt TEXT DEFAULT 'அறக்கட்டளை நிகழ்வு படம்',
+      mimetype TEXT NOT NULL DEFAULT 'image/jpeg',
+      alt TEXT DEFAULT 'அறக்கட்டளை நிகழ்வு',
       uploaded_at TEXT NOT NULL DEFAULT ''
     )
   `);
+
+    // Schema migration: Add mimetype if it doesn't exist
+    try {
+        db.run(`ALTER TABLE gallery_images ADD COLUMN mimetype TEXT NOT NULL DEFAULT 'image/jpeg'`);
+    } catch(e) { /* Column already exists */ }
 
     // Seed sample poems if the table is empty
     const result = db.exec('SELECT COUNT(*) as count FROM poems');
@@ -238,17 +248,18 @@ app.get('/api/images', (req, res) => {
     }
 });
 
-// POST /api/images — upload an image
+// POST /api/images — upload a gallery file (image/video/pdf)
 app.post('/api/images', upload.single('image'), (req, res) => {
     try {
         if (!req.file) {
-            return res.status(400).json({ error: 'No image file provided' });
+            return res.status(400).json({ error: 'No file provided' });
         }
-        const alt = req.body.alt || 'அறக்கட்டளை நிகழ்வு படம்';
+        const alt = req.body.alt || 'அறக்கட்டளை பதிவு (Media)';
         const now = new Date().toISOString();
+        const mime = req.file.mimetype;
 
-        db.run('INSERT INTO gallery_images (filename, alt, uploaded_at) VALUES (?, ?, ?)',
-            [req.file.filename, alt, now]);
+        db.run('INSERT INTO gallery_images (filename, mimetype, alt, uploaded_at) VALUES (?, ?, ?, ?)',
+            [req.file.filename, mime, alt, now]);
         saveDatabase();
 
         const result = db.exec('SELECT last_insert_rowid() as id');
@@ -257,12 +268,13 @@ app.post('/api/images', upload.single('image'), (req, res) => {
         res.status(201).json({
             id,
             filename: req.file.filename,
+            mimetype: mime,
             alt,
             url: `/uploads/${req.file.filename}`
         });
     } catch (err) {
-        console.error('Error uploading image:', err);
-        res.status(500).json({ error: 'Failed to upload image' });
+        console.error('Error uploading file:', err);
+        res.status(500).json({ error: 'Failed to upload file' });
     }
 });
 
